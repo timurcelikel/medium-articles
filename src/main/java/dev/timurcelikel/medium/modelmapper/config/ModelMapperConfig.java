@@ -1,4 +1,4 @@
-package dev.timurcelikel.medium.modelmapper;
+package dev.timurcelikel.medium.modelmapper.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

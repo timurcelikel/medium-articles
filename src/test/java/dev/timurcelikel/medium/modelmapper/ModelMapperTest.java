@@ -16,6 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ModelMapperTest {
 
 	@Autowired
+	GetSetMapper getSetMapper;
+
+	@Autowired
 	SingleModelMapper singleModelMapper;
 
 	@Autowired
@@ -23,6 +26,23 @@ class ModelMapperTest {
 
 	@Autowired
 	ModelMapper modelMapper;
+
+	@Test
+	void getSetMapperShouldMapEntityToDto() {
+
+		LegacyCatEntity legacyCatEntity = LegacyCatEntity.builder()
+				.id(12345L).f_name("Felix")
+				.l_name("DaHouseCat")
+				.orderNumber(55511L).build();
+
+		CatDto catDto = getSetMapper.mapGetSetLegacyCatEntityToCatDtoTo(legacyCatEntity);
+
+		assertThat(catDto).isNotNull();
+		assertThat(catDto.getId()).isEqualTo(legacyCatEntity.getId());
+		assertThat(catDto.getFirstName()).isEqualTo(legacyCatEntity.getF_name());
+		assertThat(catDto.getLastName()).isEqualTo(legacyCatEntity.getL_name());
+		assertThat(catDto.getOrderNumber()).isEqualTo(legacyCatEntity.getOrderNumber());
+	}
 
 	@Test
 	void modelMapperShouldMapEntityToDto() {
@@ -33,7 +53,7 @@ class ModelMapperTest {
 				.orderNumber(55511L).build();
 
 		CatDto catDto = singleModelMapper.mapLegacyCatEntityToCatDto(legacyCatEntity);
-		
+
 		assertThat(catDto).isNotNull();
 		assertThat(catDto.getId()).isEqualTo(legacyCatEntity.getId());
 		assertThat(catDto.getFirstName()).isEqualTo(legacyCatEntity.getF_name());
